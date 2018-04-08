@@ -8,12 +8,12 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].[hash:5].js',
-    publicPath: 'public/',
+    publicPath: '/public/',
   },
   module: {
     rules: [
       {
-        test: /\.jsx$/,
+        test: /\.jsx?$/,
         use: 'babel-loader',
       },
       {
@@ -23,11 +23,17 @@ module.exports = {
           'css-loader',
           'stylus-loader',
         ],
-      }
+      },
+      {
+        test: /\.html$/,
+        use: 'html-loader',
+      },
     ],
   },
   plugins: [
-    new HTMLWebpackPlugin(),
+    new HTMLWebpackPlugin({
+      template: path.join(__dirname, 'index.html'),
+    }),
   ],
   devtool: 'source-map',
   devServer: {
